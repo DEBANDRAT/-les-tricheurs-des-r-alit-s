@@ -1,161 +1,132 @@
-/* Global styles */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+let playerHealth = 100;
+let enemyHealth = 50;
+let inventory = ["pistolet", "kit_medical", "revolver"];
+let equippedWeapon = "pistolet";  // Arme par défaut
+
+// Fonction pour afficher des messages
+function afficher(message) {
+    console.log(message);
 }
 
-/* Conteneur principal */
-#gameContainer {
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+// Fonction pour attaquer avec une arme
+function attaquer(arme) {
+    let dégâts = 0;
+    let vitesse = 1; // Par défaut, la vitesse d'attaque est de 1 tour
+
+    if (arme === "pistolet") {
+        dégâts = 20;
+        afficher("Vous tirez avec le pistolet !");
+    } else if (arme === "revolver") {
+        dégâts = 20;
+        afficher("Vous tirez avec le revolver !");
+    } else if (arme === "uzi") {
+        dégâts = 10;
+        afficher("Vous tirez avec l'Uzi !");
+        // L'Uzi tire 3 balles en un seul tour
+        enemyHealth -= 3 * dégâts;
+        afficher(`L'ennemi subit ${3 * dégâts} de dégâts. Santé de l'ennemi: ${enemyHealth}`);
+        return vitesse;  // Retourne la vitesse d'attaque pour Uzi
+    } else if (arme === "fusil_precision") {
+        dégâts = 50;
+        vitesse = 2;  // Prend 2 tours pour viser et tirer
+        afficher("Vous visez avec le fusil de précision...");
+    } else if (arme === "hache") {
+        dégâts = 30;
+        vitesse = 2;  // Attaque puissante mais lente
+        afficher("Vous attaquez avec la hache !");
+    } else if (arme === "couteau_combat") {
+        dégâts = 15;
+        afficher("Vous attaquez avec le couteau de combat !");
+    } else if (arme === "griffes_acérées") {
+        dégâts = 10;
+        afficher("Vous attaquez avec les griffes acérées !");
+        // Attaque multiple
+        enemyHealth -= dégâts * 2;
+        afficher(`L'ennemi subit ${dégâts * 2} de dégâts. Santé de l'ennemi: ${enemyHealth}`);
+        return vitesse;  // Retourne la vitesse pour griffes acérées
+    } else if (arme === "hachette_jet") {
+        dégâts = 20;
+        afficher("Vous lancez la hachette de jet !");
+    } else if (arme === "bolas") {
+        dégâts = 0;
+        afficher("Vous lancez les bolas pour immobiliser l'ennemi !");
+        immobiliserEnnemi();
+        return vitesse;  // Retourne la vitesse pour bolas
+    } else if (arme === "bâton_feu") {
+        dégâts = 25;
+        afficher("Vous lancez un sort de feu !");
+    } else if (arme === "orbe_glace") {
+        dégâts = 15;
+        afficher("Vous lancez une orbe de glace !");
+        ralentirEnnemi();
+    } else if (arme === "grimoire_ténèbres") {
+        dégâts = 30;
+        vitesse = 2;  // Attaque puissante mais lente
+        afficher("Vous invoquez les ténèbres pour frapper l'ennemi !");
+    }
+
+    // Appliquer les dégâts
+    enemyHealth -= dégâts;
+    afficher(`L'ennemi subit ${dégâts} de dégâts. Santé de l'ennemi: ${enemyHealth}`);
+
+    if (enemyHealth <= 0) {
+        afficher("L'ennemi a été vaincu !");
+    }
+
+    // Retourner la vitesse d'attaque
+    return vitesse;
 }
 
-/* Console mystique */
-#console {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid #333;
-    margin-top: 20px;
-    padding: 10px;
+// Fonction pour utiliser un objet
+function utiliserObjet(objet) {
+    if (objet === "kit_medical") {
+        playerHealth += 30;
+        afficher(`Vous utilisez un kit médical. Santé actuelle: ${playerHealth}`);
+    }
 }
 
-/* Animation de l'image */
-.mystic-image {
-    transition: all 0.5s ease-in-out;
-    opacity: 0;
+// Fonction pour afficher les résistances
+function afficherRésistances() {
+    const playerResistances = `Physique: ${player.physicalResistance * 100}%, Magique: ${player.magicalResistance * 100}%, Élémentaire: ${player.elementalResistance * 100}%`;
+    const enemyResistances = `Physique: ${enemy.physicalResistance * 100}%, Magique: ${enemy.magicalResistance * 100}%, Élémentaire: ${enemy.elementalResistance * 100}%`;
+    
+    afficher(`Résistances du joueur : ${playerResistances}`);
+    afficher(`Résistances de l'ennemi : ${enemyResistances}`);
 }
 
-/* Style des boutons */
-button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 10px;
-    margin-top: 20px;
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
-    transition: background-color 0.3s ease;
+// Fonction pour appliquer les dégâts en tenant compte des résistances
+function appliquerDégâts(attacker, defender, type, dégâts) {
+    let résistance = 0;
+
+    // Choisir la résistance en fonction du type d'attaque
+    if (type === "physique") {
+        résistance = defender.physicalResistance;
+    } else if (type === "magique") {
+        résistance = defender.magicalResistance;
+    } else if (type === "élémentaire") {
+        résistance = defender.elementalResistance;
+    }
+
+    // Réduire les dégâts par la résistance
+    let dégâtsRéduits = dégâts * (1 - résistance);
+    
+    // Appliquer les dégâts à l'ennemi ou au joueur
+    defender.health -= dégâtsRéduits;
+    
+    // Affichage du message de combat
+    afficher(`${attacker} attaque avec ${dégâtsRéduits.toFixed(2)} dégâts. Santé restante: ${defender.health.toFixed(2)}`);
+
+    if (defender.health <= 0) {
+        afficher(`${defender === player ? "Vous avez été vaincu !" : "L'ennemi a été vaincu !"}`);
+    }
 }
 
-button:hover {
-    background-color: #555;
-}
+// Exemple d'événement de combat
+document.getElementById("attackBtn").addEventListener("click", function() {
+    attaquer("Joueur", enemy, "physique", 20);  // Attaque physique du joueur
+    if (enemy.health > 0) {
+        attaquer("Ennemi", player, "magique", 15);  // Attaque magique de l'ennemi
+    }
+});
 
-/* Filtre sombre appliqué */
-body.sombre {
-    filter: brightness(50%) contrast(150%);
-}
-
-/* Styles de base */
-h1 {
-    color: #ff3333;
-    font-size: 36px;
-    margin-top: 20px;
-}
-
-/* Corps du jeu */
-#game {
-    padding: 20px;
-    border-radius: 15px;
-    background: rgba(0, 0, 0, 0.75);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
-    color: #fff;
-}
-
-#status {
-    margin-bottom: 20px;
-}
-
-#combat-log {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-    padding: 10px;
-    max-height: 200px;
-    overflow-y: scroll;
-    margin-top: 20px;
-    color: #d1d1d1;
-}
-
-#combat-log ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-/* Image de fond et éléments */
-body {
-    background-color: #222;
-    color: #f4f4f4;
-    background-image: url('images/gothic-background.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-}
-
-/* Titre principal */
-h1 {
-    color: #ff3366;
-    font-size: 40px;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-}
-
-/* Images des personnages */
-.character-image {
-    width: 150px;
-    height: 150px;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-    transition: transform 0.3s ease-in-out;
-}
-
-.character-image:hover {
-    transform: scale(1.1);
-}
-
-/* Style des boutons */
-button {
-    background-color: #444;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    margin: 10px;
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    background-color: #ff3366;
-    box-shadow: 0 0 10px rgba(255, 51, 102, 0.7);
-}
-
-/* Journal de combat */
-#combat-log {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-    padding: 10px;
-    max-height: 200px;
-    overflow-y: scroll;
-    margin-top: 20px;
-}
-
-/* Style pour les statuts */
-#player-status, #enemy-status {
-    margin-bottom: 20px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 10px;
-}
+document.getElementById("checkResistancesBtn").addEventListener("click", afficherRésistances);
