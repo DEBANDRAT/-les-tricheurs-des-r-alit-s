@@ -20,7 +20,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('background-cinematique.jpg'); /* Assurez-vous de remplacer cette image par l'arrière-plan que vous voulez */
+            background-image: url('background-exoterique.jpg'); /* Remplacer par l'image mystique */
             background-size: cover;
             background-position: center;
             animation: fadeIn 4s ease-in-out;
@@ -63,9 +63,9 @@
 </head>
 <body>
 
-    <!-- Musique de fond -->
+    <!-- Musique de fond mystique -->
     <audio autoplay loop>
-        <source src="music/cinematique-background.mp3" type="audio/mpeg">
+        <source src="music/mystic-background.mp3" type="audio/mpeg"> <!-- Remplacer par la musique mystique -->
         Votre navigateur ne supporte pas l'élément audio.
     </audio>
 
