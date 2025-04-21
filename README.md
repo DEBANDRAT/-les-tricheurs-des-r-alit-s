@@ -21,12 +21,12 @@
         }
         .chapitre-container {
             display: flex;
-            height: 90vh;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             padding: 20px;
             overflow-y: auto;
+            height: calc(100vh - 100px);
         }
         .chapitre-content {
             background-color: #34495e;
@@ -34,7 +34,6 @@
             border-radius: 8px;
             width: 80%;
             max-width: 800px;
-            height: 60%;
             overflow-y: auto;
             margin-bottom: 20px;
         }
@@ -52,6 +51,8 @@
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .weapon-button {
             padding: 10px 20px;
@@ -69,6 +70,15 @@
         }
         .weapon-info {
             margin-top: 20px;
+        }
+        .image-section {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+        .image-section img {
+            width: 100%;
+            border-radius: 8px;
         }
         footer {
             background-color: #2c3e50;
@@ -90,12 +100,16 @@
     <div class="chapitre-content">
         <h2>Les Monstres d'Ombres au Centre Commercial</h2>
         <p>
-            Le centre commercial était plongé dans un chaos indescriptible. Des silhouettes de monstres d'ombres se faufilaient entre les étals, 
+            Le centre commercial était plongé dans un chaos indescriptible. Des silhouettes de monstres d'ombres se faufilaient entre les étals,
             et les bruits de leurs pas résonnaient dans l'air lourd. Sorane, brandissant sa batte de baseball, se tenait prêt à affronter l'inconnu...
         </p>
         <p>
-            Les soldats de l'armée avaient envahi les lieux, mais ils semblaient incapables de maîtriser la situation. L'attaque des créatures 
+            Les soldats de l'armée avaient envahi les lieux, mais ils semblaient incapables de maîtriser la situation. L'attaque des créatures
             surnaturelles s'intensifiait à chaque instant. L'atmosphère était imprégnée de mystère et de peur. Sorane n'était pas du genre à se laisser intimider...
+        </p>
+        <p>
+            Tandis que le chaos régnait à la surface, une trappe métallique menait aux égouts. Sorane y descendit à la recherche d'indices. Une odeur nauséabonde emplit l'air,
+            et un frisson lui parcourut l'échine lorsqu'un bruit visqueux résonna. Un monstre reptilien surgit des ombres, ses yeux rouges brillant dans la pénombre...
         </p>
     </div>
 
@@ -113,6 +127,10 @@
     <div class="weapon-info">
         <p id="weapon-description">Sélectionnez une arme pour en savoir plus...</p>
     </div>
+
+    <div class="image-section">
+        <img src="https://via.placeholder.com/800x400.png?text=Centre+Commercial+%2B+Monstres+d%27Ombres" alt="Centre commercial attaqué par des ombres">
+    </div>
 </div>
 
 <footer>
@@ -125,7 +143,7 @@
     const pistoletBtn = document.getElementById('pistolet-btn');
     const lanceFlammesBtn = document.getElementById('lance-flammes-btn');
     const weaponDescription = document.getElementById('weapon-description');
-    
+
     batteBtn.addEventListener('click', () => {
         terminalOutput.innerHTML = "> Armes : Batte de baseball sélectionnée. Prête à l'emploi.";
         updateWeaponDescription("Batte de Baseball : Une arme simple mais efficace. Son impact peut désorienter un ennemi.");
