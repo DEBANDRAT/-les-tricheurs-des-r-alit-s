@@ -1,179 +1,152 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Tricheurs des Réalités - Chapitre 1</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: white;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        header {
-            background-color: #2c3e50;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-        }
-        .chapitre-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 20px;
-            overflow-y: auto;
-            height: calc(100vh - 100px);
-        }
-        .chapitre-content {
-            background-color: #34495e;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 800px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-        .terminal {
-            background-color: #1e272e;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            width: 80%;
-            max-width: 800px;
-            color: #00ff00;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .weapon-selector {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .weapon-button {
-            padding: 10px 20px;
-            background-color: #16a085;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .weapon-button:hover {
-            background-color: #1abc9c;
-        }
-        .weapon-selected {
-            background-color: #e74c3c;
-        }
-        .weapon-info {
-            margin-top: 20px;
-        }
-        .image-section {
-            margin-top: 20px;
-            width: 80%;
-            max-width: 800px;
-        }
-        .image-section img {
-            width: 100%;
-            border-radius: 8px;
-        }
-        footer {
-            background-color: #2c3e50;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Terminal de Commandement</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 2em;
+    }
+    .console {
+      background-color: #111;
+      border: 1px solid #0f0;
+      padding: 1em;
+      margin-top: 1em;
+      height: 400px;
+      overflow-y: auto;
+    }
+    input {
+      background-color: #000;
+      color: #0f0;
+      border: none;
+      width: 100%;
+      font-size: 1em;
+      font-family: inherit;
+    }
+  </style>
 </head>
 <body>
+  <h1>🖥 Terminal de Commandement</h1>
+  <p>Bienvenue, utilisateur non-identifié. Entrez une commande pour interagir avec les systèmes secrets de l’Omnivers de la Vierge.</p>
+  <div class="console" id="console">
+    > help : liste des commandes disponibles<br>
+  </div>
+  <input type="text" id="commande" placeholder="Entrez une commande..." onkeydown="if(event.key==='Enter'){executerCommande()}" autofocus>
 
-<header>
-    Chapitre 1 - *Les Tricheurs des Réalités*
-</header>
+  <script>
+    const consoleDiv = document.getElementById('console');
+    const commandeInput = document.getElementById('commande');
 
-<div class="chapitre-container">
-    <div class="chapitre-content">
-        <h2>Les Monstres d'Ombres au Centre Commercial</h2>
-        <p>
-            Le centre commercial était plongé dans un chaos indescriptible. Des silhouettes de monstres d'ombres se faufilaient entre les étals,
-            et les bruits de leurs pas résonnaient dans l'air lourd. Sorane, brandissant sa batte de baseball, se tenait prêt à affronter l'inconnu...
-        </p>
-        <p>
-            Les soldats de l'armée avaient envahi les lieux, mais ils semblaient incapables de maîtriser la situation. L'attaque des créatures
-            surnaturelles s'intensifiait à chaque instant. L'atmosphère était imprégnée de mystère et de peur. Sorane n'était pas du genre à se laisser intimider...
-        </p>
-        <p>
-            Tandis que le chaos régnait à la surface, une trappe métallique menait aux égouts. Sorane y descendit à la recherche d'indices. Une odeur nauséabonde emplit l'air,
-            et un frisson lui parcourut l'échine lorsqu'un bruit visqueux résonna. Un monstre reptilien surgit des ombres, ses yeux rouges brillant dans la pénombre...
-        </p>
-    </div>
+    const items = {
+      "blade_omega": {
+        nom: "Lame Omega",
+        description: "Épée capable de trancher les réalités. +15 Dégâts",
+        rarete: "légendaire"
+      },
+      "neuro_cloak": {
+        nom: "Cape Neurophantom",
+        description: "Rend invisible aux entités du Megavers. +30% esquive",
+        rarete: "épique"
+      },
+      "injector_x": {
+        nom: "Injecteur X-Vita",
+        description: "Restaure toute l'énergie vitale. Utilisable une fois par mission.",
+        rarete: "rare"
+      }
+    };
 
-    <div class="terminal">
-        <p><strong>Terminal de Commande:</strong></p>
-        <p id="terminal-output">> Chargement des données du centre commercial...</p>
-    </div>
+    const zones = {
+      "zone_1": "Égouts de Terreurville",
+      "zone_2": "Chapiteau Maudit",
+      "zone_3": "Laboratoire Fantôme",
+      "hub": "Hall Central de Commandement"
+    };
 
-    <div class="weapon-selector">
-        <button class="weapon-button" id="batte-btn">Batte de Baseball</button>
-        <button class="weapon-button" id="pistolet-btn">Pistolet</button>
-        <button class="weapon-button" id="lance-flammes-btn">Lance-Flammes</button>
-    </div>
+    let inventaire = [];
+    let vie = 100;
 
-    <div class="weapon-info">
-        <p id="weapon-description">Sélectionnez une arme pour en savoir plus...</p>
-    </div>
-
-    <div class="image-section">
-        <img src="https://via.placeholder.com/800x400.png?text=Centre+Commercial+%2B+Monstres+d%27Ombres" alt="Centre commercial attaqué par des ombres">
-    </div>
-</div>
-
-<footer>
-    *Les Tricheurs des Réalités* - Chapitre 1
-</footer>
-
-<script>
-    const terminalOutput = document.getElementById('terminal-output');
-    const batteBtn = document.getElementById('batte-btn');
-    const pistoletBtn = document.getElementById('pistolet-btn');
-    const lanceFlammesBtn = document.getElementById('lance-flammes-btn');
-    const weaponDescription = document.getElementById('weapon-description');
-
-    batteBtn.addEventListener('click', () => {
-        terminalOutput.innerHTML = "> Armes : Batte de baseball sélectionnée. Prête à l'emploi.";
-        updateWeaponDescription("Batte de Baseball : Une arme simple mais efficace. Son impact peut désorienter un ennemi.");
-        setWeaponSelected(batteBtn);
-    });
-
-    pistoletBtn.addEventListener('click', () => {
-        terminalOutput.innerHTML = "> Armes : Pistolet sélectionné. Munition en cours d'activation.";
-        updateWeaponDescription("Pistolet : Une arme à feu classique. Peut tuer à distance avec précision.");
-        setWeaponSelected(pistoletBtn);
-    });
-
-    lanceFlammesBtn.addEventListener('click', () => {
-        terminalOutput.innerHTML = "> Armes : Lance-flammes prêt à brûler tout sur son passage.";
-        updateWeaponDescription("Lance-Flammes : Une arme dévastatrice qui peut incinérer de larges zones.");
-        setWeaponSelected(lanceFlammesBtn);
-    });
-
-    function updateWeaponDescription(description) {
-        weaponDescription.innerHTML = description;
+    function afficher(message) {
+      consoleDiv.innerHTML += `> ${message}<br>`;
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;
     }
 
-    function setWeaponSelected(selectedBtn) {
-        const buttons = [batteBtn, pistoletBtn, lanceFlammesBtn];
-        buttons.forEach(button => {
-            button.classList.remove('weapon-selected');
-        });
-        selectedBtn.classList.add('weapon-selected');
+    function afficherItem(code) {
+      const item = items[code];
+      if (item) {
+        inventaire.push(item);
+        afficher(`Objet récupéré : ${item.nom} \nDescription : ${item.description} \nRareté : ${item.rarete}`);
+      } else {
+        afficher("Objet inconnu.");
+      }
     }
-</script>
 
+    function combat() {
+      const degats = Math.floor(Math.random() * 25) + 5;
+      vie -= degats;
+      if (vie <= 0) {
+        afficher(`⚠️ Vous avez été vaincu par une entité du Megavers... Votre terminal redémarre.`);
+        vie = 100;
+        inventaire = [];
+      } else {
+        afficher(`💥 Attaque ennemie ! Dégâts subis : ${degats}. Points de vie restants : ${vie}`);
+      }
+    }
+
+    function executerCommande() {
+      const cmd = commandeInput.value.trim().toLowerCase();
+      afficher(cmd);
+      commandeInput.value = '';
+
+      switch(cmd) {
+        case 'help':
+          afficher('Commandes : scan, fichier sorane, fichier anomalies, statut multivers, inventaire, loot 1-3, combat, explorer zone_1-3, hub');
+          break;
+        case 'scan':
+          afficher('Analyse des réalités... Anomalies détectées dans le Megavers. Flux instable.');
+          break;
+        case 'fichier sorane':
+          afficher('Accès au dossier : Sorane\nNom : Sorane Uriel\nStatut : fugitif\nObservation : sujet porteur d’une anomalie classée Yoline.');
+          break;
+        case 'fichier anomalies':
+          afficher('Anomalies enregistrées : Ombres rampantes, Clown X-473, Nexus inconnu dans les égouts.');
+          break;
+        case 'statut multivers':
+          afficher('Synchronisation des mondes...\n- Vierge : actif\n- Megavers : instable\n- Archiverses : accès restreint');
+          break;
+        case 'inventaire':
+          if (inventaire.length === 0) {
+            afficher("Inventaire vide.");
+          } else {
+            afficher("Inventaire actuel :");
+            inventaire.forEach(obj => afficher(`- ${obj.nom} (${obj.rarete}) : ${obj.description}`));
+          }
+          break;
+        case 'loot 1':
+          afficherItem('blade_omega');
+          break;
+        case 'loot 2':
+          afficherItem('neuro_cloak');
+          break;
+        case 'loot 3':
+          afficherItem('injector_x');
+          break;
+        case 'combat':
+          combat();
+          break;
+        case 'explorer zone_1':
+        case 'explorer zone_2':
+        case 'explorer zone_3':
+        case 'hub':
+          const code = cmd.replace('explorer ', '').replace('hub', 'hub');
+          afficher(`🚪 Entrée dans : ${zones[code] || 'zone inconnue'}... Préparez-vous à l’imprévu.`);
+          break;
+        default:
+          afficher('Commande inconnue. Tapez "help" pour assistance.');
+      }
+    }
+  </script>
 </body>
 </html>
