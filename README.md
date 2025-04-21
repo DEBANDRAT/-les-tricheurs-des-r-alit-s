@@ -1,87 +1,181 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Tricheurs des Réalités - Chapitre 1</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #111;
-            color: white;
-            text-align: center;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combat RPG Gothique Urbain</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        .cinematique {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('background-cinematique.jpg'); /* Assurez-vous de remplacer cette image par l'arrière-plan que vous voulez */
-            background-size: cover;
-            background-position: center;
-            animation: fadeIn 4s ease-in-out;
-        }
+    #game {
+      background-color: #333;
+      border-radius: 10px;
+      padding: 20px;
+      width: 60%;
+      max-width: 800px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
 
-        h1, h2 {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-        }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    #status {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
 
-        .text {
-            margin-top: 20%;
-            font-size: 1.5em;
-            line-height: 1.5;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-        }
+    #status h3 {
+      margin-bottom: 10px;
+    }
 
-        .dialogue {
-            font-style: italic;
-            color: #ffcc00;
-            text-shadow: 1px 1px 10px rgba(255, 255, 255, 0.7);
-        }
+    .character-image {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
 
-        .action {
-            font-weight: bold;
-            color: #00ffcc;
-        }
+    button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 45%;
+      margin: 10px 2.5%;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
 
-        audio {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
-    </style>
+    button:hover {
+      background-color: #666;
+    }
+
+    #log {
+      margin-top: 20px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    #combat-log ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    #combat-log li {
+      margin: 5px 0;
+    }
+  </style>
 </head>
 <body>
+  <div id="game">
+    <h1>Combat RPG - Gothique Urbain</h1>
 
-    <!-- Musique de fond -->
-    <audio autoplay loop>
-        <source src="music/cinematique-background.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas l'élément audio.
-    </audio>
+    <!-- Statut du joueur -->
+    <div id="status">
+      <div id="player-status">
+        <h3>Joueur</h3>
+        <p id="player-health">Santé: 100</p>
+        <img id="player-image" src="images/player.jpg" alt="Joueur" class="character-image">
+        <p id="player-weapon">Arme: Épée de l'ombre</p>
+      </div>
 
-    <!-- Cinématique -->
-    <div class="cinematique">
-        <div class="text">
-            <h1>Les Tricheurs des Réalités</h1>
-            <h2>Chapitre 1 : Les Ombres du Centre Commercial</h2>
-            <p class="dialogue">"Attends ! Je ne te veux aucun mal, Sorane!"</p>
-            <p class="dialogue">"Allez-vous-en!"</p>
-            <p class="action">Soudain, les lumières du centre commercial commencent à clignoter...</p>
-            <p class="action">Les ombres surgissent des murs et du sol, formant des créatures hideuses...</p>
-            <p class="dialogue">"On va devoir passer par les sous-sols… il n’y a plus d’échappatoire."</p>
-            <p class="action">Sorane et Duality se préparent à fuir à travers un couloir sombre.</p>
-        </div>
+      <!-- Statut de l'ennemi -->
+      <div id="enemy-status">
+        <h3>Ennemi</h3>
+        <p id="enemy-health">Santé: 50</p>
+        <img id="enemy-image" src="images/monster.jpg" alt="Ennemi" class="character-image">
+        <p id="enemy-weapon">Arme: Lance de feu</p>
+      </div>
     </div>
 
+    <!-- Boutons pour les actions -->
+    <div>
+      <button id="attackBtn">Attaquer</button>
+      <button id="checkResistancesBtn">Vérifier Résistances</button>
+    </div>
+
+    <!-- Journal de combat -->
+    <div id="log">
+      <h3>Journal de Combat</h3>
+      <ul id="combat-log-ul"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Script pour gérer le combat
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const attackBtn = document.getElementById('attackBtn');
+      const checkResistancesBtn = document.getElementById('checkResistancesBtn');
+      const playerHealth = document.getElementById('player-health');
+      const enemyHealth = document.getElementById('enemy-health');
+      const combatLogUl = document.getElementById('combat-log-ul');
+
+      let playerHealthPoints = 100;
+      let enemyHealthPoints = 50;
+
+      // Fonction pour afficher un message dans le journal
+      function updateCombatLog(message) {
+        const logItem = document.createElement('li');
+        logItem.textContent = message;
+        combatLogUl.appendChild(logItem);
+        combatLogUl.scrollTop = combatLogUl.scrollHeight; // Pour faire défiler le journal
+      }
+
+      // Fonction pour attaquer
+      function attack() {
+        const damage = Math.floor(Math.random() * 20) + 1; // Dommages aléatoires entre 1 et 20
+        enemyHealthPoints -= damage;
+        if (enemyHealthPoints <= 0) {
+          enemyHealthPoints = 0;
+          updateCombatLog(`Le joueur attaque ! L'ennemi est vaincu.`);
+        } else {
+          updateCombatLog(`Le joueur attaque ! L'ennemi perd ${damage} points de santé.`);
+        }
+        enemyHealth.textContent = `Santé: ${enemyHealthPoints}`;
+        checkGameOver();
+      }
+
+      // Fonction pour vérifier les résistances
+      function checkResistances() {
+        updateCombatLog("Résistances du joueur: Physique: 50%, Magique: 30%, Élémentaire: 20%");
+        updateCombatLog("Résistances de l'ennemi: Physique: 40%, Magique: 10%, Élémentaire: 50%");
+      }
+
+      // Fonction pour gérer la fin du jeu
+      function checkGameOver() {
+        if (playerHealthPoints <= 0) {
+          updateCombatLog("Le joueur a été vaincu !");
+          attackBtn.disabled = true;
+          checkResistancesBtn.disabled = true;
+        } else if (enemyHealthPoints <= 0) {
+          updateCombatLog("L'ennemi a été vaincu !");
+          attackBtn.disabled = true;
+          checkResistancesBtn.disabled = true;
+        }
+      }
+
+      // Événements des boutons
+      attackBtn.addEventListener('click', attack);
+      checkResistancesBtn.addEventListener('click', checkResistances);
+    });
+  </script>
 </body>
 </html>
