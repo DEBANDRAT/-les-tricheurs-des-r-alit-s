@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -56,14 +56,16 @@
 
 <div class="intro">
     <h2>Ambiance et Histoire</h2>
-    <p>Plongez dans un univers où la réalité et l'illusion se mêlent, où les Tricheurs manipulent les lois de l'existence.</p>
+    <p>Dans un monde où la politique et le pouvoir gouvernent tout, où les anomalies paranormales sont utilisées comme instruments de manipulation, un groupe de rebelles se lève pour découvrir la vérité cachée derrière un gouvernement secret et une fondation militaire mystérieuse.</p>
 </div>
 
 <div class="story">
     <h2>Le Commencement</h2>
-    <p>Dans un monde contrôlé par une organisation secrète, les Tricheurs des Réalités se battent pour découvrir la vérité. À la croisée des chemins entre science, magie et pouvoir politique, Sorane et ses compagnons se lancent dans une aventure périlleuse où chaque pas peut être un piège tendu par les forces en place.</p>
+    <p>Dans l'omnivers de la Vierge, la société vit sous l'ombre d'un gouvernement totalitaire contrôlé par des sociétés secrètes. La magie et la science, considérées comme des anomalies, sont exploitées pour maintenir l'ordre et la soumission. Mais des forces invisibles s'agitent dans les coulisses : les Tricheurs des Réalités, des individus capables de manipuler les lois de l'existence et de voyager entre les mondes.</p>
 
-    <p>Un centre commercial attaqué par des créatures obscures, des expériences secrètes dans les égouts, des personnages perdus entre deux mondes... L'histoire ne fait que commencer, et l'ombre de l'invisible grandit chaque jour.</p>
+    <p>Sorane, un jeune rebelle, se retrouve pris dans une spirale d'événements qui le dépassent. Attaqué par des monstres d'ombre dans un centre commercial, il découvre que tout est orchestré par l'armée et ses alliés secrets. Au fur et à mesure de son enquête, il se rend compte que son propre destin est lié à des forces plus grandes, plus sombres. Des secrets enfouis dans les égouts, des créatures terrifiantes, et une révélation sur sa propre nature le poussent à s'aventurer dans un combat pour la vérité, un combat où rien n'est ce qu'il semble être.</p>
+
+    <p>Alors que les frontières entre les mondes se dissolvent et que le pouvoir de la fondation militaire se renforce, Sorane devra choisir entre ses alliés et ses ennemis, entre la rébellion et la soumission, entre la réalité et l'illusion. Mais dans cet omnivers dévoré par les ténèbres, qui peut-on vraiment croire ?</p>
 </div>
 
 <div class="footer">
@@ -71,4 +73,3 @@
 </div>
 
 </body>
-</html>
