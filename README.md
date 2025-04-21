@@ -1,84 +1,29 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Les Tricheurs des Réalités - Cinématique d'Introduction</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Georgia', serif;
-      background-color: #0d0d0d;
-      color: #f5f5f5;
-    }
-    .cinematic {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      background: rgba(0, 0, 0, 0.7);
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-      border-radius: 10px;
-      margin-top: 50px;
-    }
-    .scene-title {
-      font-size: 28px;
-      color: #e60000;
-      margin-bottom: 20px;
-    }
-    .dialogue {
-      margin: 20px 0;
-      font-style: italic;
-      padding-left: 20px;
-    }
-    .character {
-      color: #66ccff;
-    }
-    .narration {
-      margin: 15px 0;
-      line-height: 1.6;
-    }
-  </style>
-</head>
-<body>
-  <div class="cinematic">
-    <div class="scene-title">🎬 Cinématique d'Introduction : Le Rêve</div>
+# Lecture du fichier HTML stylisé existant
+html_path = "/mnt/data/chapitre1_les_tricheurs_des_realites_stylise.html"
+with open(html_path, "r", encoding="utf-8") as file:
+    html_content = file.read()
 
-    <div class="narration">
-      Un désert de flammes. Des hurlements déformés résonnent au loin. Au centre de ce paysage de cauchemar, une silhouette se dresse, figée dans les braises tourbillonnantes.
-    </div>
+# Bloc HTML à insérer pour une scène cinématique et une musique de fond
+cinematic_music_block = """
+<!-- Scène cinématique (exemple d'introduction) -->
+<div class="section">
+  <h2 class="mystic">Scène d'ouverture</h2>
+  <p class="mystic-small">Un ciel de cendres recouvre la ville. Des ombres rampent dans les ruelles abandonnées tandis qu’une voix lointaine murmure les secrets d’un monde oublié. Le silence est brisé par un souffle…</p>
+</div>
 
-    <div class="narration">
-      Il porte un masque à gaz. Son regard est invisible. Son aura, elle, est suffocante. Cet homme, c’est <strong>Debandrat</strong>.
-    </div>
+<!-- Musique de fond -->
+<audio controls autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_6fa119dd53.mp3?filename=dark-suspense-ambient-105788.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio HTML5.
+</audio>
+"""
 
-    <div class="narration">
-      Les flammes l’engloutissent presque. La scène se distord. Le rêve s’effondre.
-    </div>
+# Ajouter le bloc juste après la balise <body>
+html_content_updated = html_content.replace("<body>", f"<body>{cinematic_music_block}", 1)
 
-    <div class="narration">
-      <em>...Sorane se réveille en sursaut, haletant, au milieu du centre commercial. Autour de lui, le monde semble étrangement silencieux.</em>
-    </div>
+# Sauvegarder la nouvelle version du fichier HTML
+updated_path = "/mnt/data/chapitre1_les_tricheurs_des_realites_cine_musique.html"
+with open(updated_path, "w", encoding="utf-8") as file:
+    file.write(html_content_updated)
 
-    <div class="scene-title">🎬 Début du Chapitre 1 : Rencontre</div>
-
-    <div class="narration">
-      Une femme mystérieuse s’assied face à lui. Une forte odeur de parfum, des bijoux égyptiens, une longue veste en peau animale...
-    </div>
-
-    <div class="dialogue"><span class="character">Duality :</span> "Attends ! Je ne te veux aucun mal, Sorane !"</div>
-    <div class="dialogue"><span class="character">Sorane :</span> "Allez-vous-en."</div>
-    <div class="dialogue"><span class="character">Duality :</span> "Je viens seulement t’aider, Sorane."</div>
-
-    <div class="narration">
-      Les lumières clignotent. Un craquement électrique fend le silence. Puis l’obscurité. Des formes bougent sur les murs...
-    </div>
-    <div class="narration">
-      Du liquide noir suinte du sol. Des créatures difformes émergent, hurlant, brandissant des lames courbes.
-    </div>
-
-    <div class="narration">
-      Le combat commence…
-    </div>
-  </div>
-</body>
-</html>
+updated_path
