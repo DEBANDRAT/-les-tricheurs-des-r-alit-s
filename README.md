@@ -1,181 +1,161 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Combat RPG Gothique Urbain</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #121212;
-      color: white;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+/* Global styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
 
-    #game {
-      background-color: #333;
-      border-radius: 10px;
-      padding: 20px;
-      width: 60%;
-      max-width: 800px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    }
+/* Conteneur principal */
+#gameContainer {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
+/* Console mystique */
+#console {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #333;
+    margin-top: 20px;
+    padding: 10px;
+}
 
-    #status {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
+/* Animation de l'image */
+.mystic-image {
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+}
 
-    #status h3 {
-      margin-bottom: 10px;
-    }
+/* Style des boutons */
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+    transition: background-color 0.3s ease;
+}
 
-    .character-image {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
+button:hover {
+    background-color: #555;
+}
 
-    button {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 10px;
-      width: 45%;
-      margin: 10px 2.5%;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
+/* Filtre sombre appliqué */
+body.sombre {
+    filter: brightness(50%) contrast(150%);
+}
 
-    button:hover {
-      background-color: #666;
-    }
+/* Styles de base */
+h1 {
+    color: #ff3333;
+    font-size: 36px;
+    margin-top: 20px;
+}
 
-    #log {
-      margin-top: 20px;
-      max-height: 150px;
-      overflow-y: auto;
-    }
+/* Corps du jeu */
+#game {
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+    color: #fff;
+}
 
-    #combat-log ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
+#status {
+    margin-bottom: 20px;
+}
 
-    #combat-log li {
-      margin: 5px 0;
-    }
-  </style>
-</head>
-<body>
-  <div id="game">
-    <h1>Combat RPG - Gothique Urbain</h1>
+#combat-log {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: scroll;
+    margin-top: 20px;
+    color: #d1d1d1;
+}
 
-    <!-- Statut du joueur -->
-    <div id="status">
-      <div id="player-status">
-        <h3>Joueur</h3>
-        <p id="player-health">Santé: 100</p>
-        <img id="player-image" src="images/player.jpg" alt="Joueur" class="character-image">
-        <p id="player-weapon">Arme: Épée de l'ombre</p>
-      </div>
+#combat-log ul {
+    list-style-type: none;
+    padding-left: 0;
+}
 
-      <!-- Statut de l'ennemi -->
-      <div id="enemy-status">
-        <h3>Ennemi</h3>
-        <p id="enemy-health">Santé: 50</p>
-        <img id="enemy-image" src="images/monster.jpg" alt="Ennemi" class="character-image">
-        <p id="enemy-weapon">Arme: Lance de feu</p>
-      </div>
-    </div>
+/* Image de fond et éléments */
+body {
+    background-color: #222;
+    color: #f4f4f4;
+    background-image: url('images/gothic-background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
 
-    <!-- Boutons pour les actions -->
-    <div>
-      <button id="attackBtn">Attaquer</button>
-      <button id="checkResistancesBtn">Vérifier Résistances</button>
-    </div>
+/* Titre principal */
+h1 {
+    color: #ff3366;
+    font-size: 40px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
 
-    <!-- Journal de combat -->
-    <div id="log">
-      <h3>Journal de Combat</h3>
-      <ul id="combat-log-ul"></ul>
-    </div>
-  </div>
+/* Images des personnages */
+.character-image {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease-in-out;
+}
 
-  <script>
-    // Script pour gérer le combat
+.character-image:hover {
+    transform: scale(1.1);
+}
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const attackBtn = document.getElementById('attackBtn');
-      const checkResistancesBtn = document.getElementById('checkResistancesBtn');
-      const playerHealth = document.getElementById('player-health');
-      const enemyHealth = document.getElementById('enemy-health');
-      const combatLogUl = document.getElementById('combat-log-ul');
+/* Style des boutons */
+button {
+    background-color: #444;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
 
-      let playerHealthPoints = 100;
-      let enemyHealthPoints = 50;
+button:hover {
+    background-color: #ff3366;
+    box-shadow: 0 0 10px rgba(255, 51, 102, 0.7);
+}
 
-      // Fonction pour afficher un message dans le journal
-      function updateCombatLog(message) {
-        const logItem = document.createElement('li');
-        logItem.textContent = message;
-        combatLogUl.appendChild(logItem);
-        combatLogUl.scrollTop = combatLogUl.scrollHeight; // Pour faire défiler le journal
-      }
+/* Journal de combat */
+#combat-log {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: scroll;
+    margin-top: 20px;
+}
 
-      // Fonction pour attaquer
-      function attack() {
-        const damage = Math.floor(Math.random() * 20) + 1; // Dommages aléatoires entre 1 et 20
-        enemyHealthPoints -= damage;
-        if (enemyHealthPoints <= 0) {
-          enemyHealthPoints = 0;
-          updateCombatLog(`Le joueur attaque ! L'ennemi est vaincu.`);
-        } else {
-          updateCombatLog(`Le joueur attaque ! L'ennemi perd ${damage} points de santé.`);
-        }
-        enemyHealth.textContent = `Santé: ${enemyHealthPoints}`;
-        checkGameOver();
-      }
-
-      // Fonction pour vérifier les résistances
-      function checkResistances() {
-        updateCombatLog("Résistances du joueur: Physique: 50%, Magique: 30%, Élémentaire: 20%");
-        updateCombatLog("Résistances de l'ennemi: Physique: 40%, Magique: 10%, Élémentaire: 50%");
-      }
-
-      // Fonction pour gérer la fin du jeu
-      function checkGameOver() {
-        if (playerHealthPoints <= 0) {
-          updateCombatLog("Le joueur a été vaincu !");
-          attackBtn.disabled = true;
-          checkResistancesBtn.disabled = true;
-        } else if (enemyHealthPoints <= 0) {
-          updateCombatLog("L'ennemi a été vaincu !");
-          attackBtn.disabled = true;
-          checkResistancesBtn.disabled = true;
-        }
-      }
-
-      // Événements des boutons
-      attackBtn.addEventListener('click', attack);
-      checkResistancesBtn.addEventListener('click', checkResistances);
-    });
-  </script>
-</body>
-</html>
+/* Style pour les statuts */
+#player-status, #enemy-status {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
