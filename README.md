@@ -1,194 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Les Tricheurs des Réalités - Chapitre 1</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'EB Garamond', serif;
-      background-color: #0b0b0b;
-      color: #e0e0e0;
-      line-height: 1.6;
-      padding: 20px;
-    }
-    h1, h2, h3, .mystic {
-      font-family: 'UnifrakturCook', cursive;
-      color: #caa96a;
-      letter-spacing: 1px;
-      text-shadow: 1px 1px 4px #000;
-    }
-    .mystic-small {
-      font-family: 'UnifrakturCook', cursive;
-      font-size: 1.2em;
-      color: #a0865e;
-    }
-    p {
-      margin-bottom: 1.5em;
-    }
-    .section {
-      margin-bottom: 3em;
-    }
-    .cinematic {
-      color: #f4f4f4;
-      background-color: #333;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    }
-    .choice {
-      margin-top: 10px;
-      padding: 10px;
-      background-color: #444;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .inventory {
-      margin-top: 20px;
-    }
-    .status {
-      margin-top: 20px;
-      color: #a0a0a0;
-    }
-    #combat-log {
-      margin-top: 20px;
-      background-color: #222;
-      padding: 10px;
-      border-radius: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Tricheurs des Réalités - Chapitre 2 - Partie 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .chapter-title {
+            font-size: 2em;
+            text-align: center;
+            color: #f39c12;
+            margin-bottom: 20px;
+        }
+        .scene {
+            margin-bottom: 40px;
+        }
+        .character-dialogue {
+            font-weight: bold;
+            color: #f39c12;
+        }
+        .narrative-text {
+            font-style: italic;
+            color: #ecf0f1;
+        }
+        .emphasis {
+            color: #e74c3c;
+        }
+        .mission-info {
+            font-size: 1.2em;
+            color: #16a085;
+        }
+    </style>
 </head>
 <body>
-  <h1 class="mystic">Les Tricheurs des Réalités - Chapitre 1</h1>
+    <h1 class="chapter-title">Les Tricheurs des Réalités - Chapitre 2 - Partie 2</h1>
 
-  <!-- Cinématique d'introduction -->
-  <div class="cinematic">
-    <h2 class="mystic">Prologue : L'Appel des Ombres</h2>
-    <p>
-      Sorane s'aventure dans le centre commercial abandonné, une atmosphère étrange et oppressante enveloppe les lieux. Les murs sont recouverts de graffiti et de symboles mystiques, témoignant de l'activité étrange qui s'y déroule.
-    </p>
-    <p>
-      <strong>Une ombre se profile.</strong> Des créatures surgissent dans les recoins sombres, des monstres d'ombre aux yeux luisants. Sorane se prépare à affronter l'inconnu.
-    </p>
-    <audio controls autoplay>
-      <source src="musique_intro.mp3" type="audio/mp3">
-      Votre navigateur ne supporte pas la lecture audio.
-    </audio>
-  </div>
-
-  <!-- Choix du joueur -->
-  <div class="section">
-    <h3 class="mystic">Choisis ton action :</h3>
-    <div class="choice" onclick="choisirCombat()">Affronter les monstres</div>
-    <div class="choice" onclick="choisirFuir()">Fuir dans les égouts</div>
-  </div>
-
-  <!-- Scène cinématique du combat ou de la fuite -->
-  <div class="cinematic" id="combat-scene" style="display:none;">
-    <h2 class="mystic">Le Combat Commence</h2>
-    <p>
-      Sorane brandit sa batte de baseball, prêt à affronter les créatures d'ombre qui l'entourent. Les monstres grognent et se précipitent sur lui. Le combat est inévitable.
-    </p>
-    <audio controls autoplay>
-      <source src="musique_combat.mp3" type="audio/mp3">
-    </audio>
-    <button onclick="combat()">Lancer le combat</button>
-  </div>
-
-  <div class="cinematic" id="fuite-scene" style="display:none;">
-    <h2 class="mystic">La Fuite dans les Égouts</h2>
-    <p>
-      Sorane prend une décision risquée et plonge dans les égouts sombres, échappant aux monstres. Mais des bruits étranges résonnent dans les tunnels. D'autres créatures rôdent, prêtes à surgir de l'ombre.
-    </p>
-    <audio controls autoplay>
-      <source src="musique_fuite.mp3" type="audio/mp3">
-    </audio>
-  </div>
-
-  <!-- Statut du joueur -->
-  <div class="status">
-    <h3 class="mystic">Statut du Joueur</h3>
-    <p id="player-status">Santé: <span id="health">100</span> | Magie: <span id="magic">50</span> | Endurance: <span id="endurance">75</span></p>
-  </div>
-
-  <!-- Inventaire -->
-  <div class="inventory">
-    <h3 class="mystic">Inventaire</h3>
-    <ul>
-      <li>Bat de baseball (arme de base)</li>
-      <li>Potion de guérison (utiliser pour récupérer de la santé)</li>
-      <li>Masque d'ombre (augmente la discrétion et la résistance aux ténèbres)</li>
-    </ul>
-  </div>
-
-  <!-- Combat Log -->
-  <div id="combat-log"></div>
-
-  <!-- Quêtes secondaires -->
-  <div class="section">
-    <h3 class="mystic">Quêtes secondaires disponibles :</h3>
-    <ul>
-      <li>Explorer le centre commercial pour des ressources perdues.</li>
-      <li>Rencontrer un survivant caché et obtenir une arme légendaire.</li>
-    </ul>
-  </div>
-
-  <!-- Boss caché -->
-  <div class="section">
-    <h3 class="mystic">Boss Caché :</h3>
-    <p>
-      Un boss puissant se cache dans les égouts, une créature mythologique, jadis scellée. La défaite de ce monstre pourrait changer le cours de l'histoire...
-    </p>
-  </div>
-
-  <!-- Système de Sauvegarde -->
-  <div class="section">
-    <button onclick="sauvegarder()">Sauvegarder le jeu</button>
-    <button onclick="charger()">Charger la sauvegarde</button>
-  </div>
-
-  <script>
-    // Variables du joueur
-    let health = 100;
-    let magic = 50;
-    let endurance = 75;
-
-    // Fonction de choix d'action
-    function choisirCombat() {
-      document.getElementById("combat-scene").style.display = "block";
-      document.getElementById("fuite-scene").style.display = "none";
-    }
-
-    function choisirFuir() {
-      document.getElementById("fuite-scene").style.display = "block";
-      document.getElementById("combat-scene").style.display = "none";
-    }
-
-    // Fonction de combat
-    function combat() {
-      let monsterHealth = 50;  // Santé du monstre
-      let damage = Math.floor(Math.random() * 20) + 10;  // Dégâts du joueur
-
-      // Attaque
-      monsterHealth -= damage;
-      health -= Math.floor(Math.random() * 15);  // Dégâts du monstre
-
-      // Mise à jour du statut
-      document.getElementById("health").innerText = health;
-      let combatLog = `Vous avez infligé ${damage} de dégâts. Monstre restant: ${monsterHealth} HP.`;
-      document.getElementById("combat-log").innerText = combatLog;
-
-      if (health <= 0) {
-        alert("Vous êtes mort. Fin du jeu.");
-        resetGame();
-      } else if (monsterHealth <= 0) {
-        alert("Le monstre est vaincu !");
-        resetGame();
-      }
-    }
-
-    // Fonction de sauvegarde
-    function sauvegarder() {
-      localStorage.setItem
+    <div class="scene">
+        <p class="narrative-text">Dans la nuit sombre, sous un ciel sans lune, une scène intrigante se déroule près d'un mur hérissé de fils barbelés. Des panneaux indiquent clairement la dangerosité des lieux : "<span class="emphasis">Zone interdite, zone dangereuse.</span>"</p>
+        <p class="narrative-text">Là, assis sur le pare-chocs d'une voiture, <span class="character-dialogue">Rider</span>, cigarette à la bouche, attend patiemment, entouré de plusieurs membres de la Yakuza, tous de type asiatique. Les silhouettes sont tendues, leurs regards rivés vers l'obscurité.</p>
+        <p class="character-dialogue">Rider :</p>
+        <p class="narrative-text">"Ils sont en retard."</p>
+        <p class="narrative-text">Finalement, un 4x4 militaire s'arrête devant eux. Deux figures en descendent, chacune plus impressionnante que l'autre. La première, <span class="character-dialogue">Felina</span>, est une femme à l’apparence féline, sa fourrure tigrée se distinguant légèrement sous son uniforme militaire, des oreilles de chat se devinant sous un bonnet de camouflage, et ses griffes visibles dépassant de ses gants. Elle marche avec une assurance féroce, ses bottes militaires frappant le sol dans un rythme cadencé.</p>
+        <p class="narrative-text">À ses côtés, <span class="character-dialogue">Loupious</span>, un homme à l’apparence de loup, sa fourrure brun foncé s’échappant sous un gilet pare-balles sans manches. Son allure imposante, renforcée par sa posture d’homme sauvage, rend la scène encore plus intense. Ses chaussures militaires écrasent la terre alors qu’il observe <span class="character-dialogue">Rider</span> avec des yeux perçants.</p>
+        <p class="narrative-text">Rider, impassible, jette sa cigarette au sol et l’écrase du pied, avant de lancer d’un ton provocateur :</p>
+        <p class="character-dialogue">Rider :</p>
+        <p class="narrative-text">"Vous êtes en retard, tous les deux."</p>
+        <p class="narrative-text">Felina, avec un air agressif, ne tarde pas à répliquer, ses yeux félins brillants d'une lueur dangereuse :</p>
+        <p class="character-dialogue">Felina :</p>
+        <p class="narrative-text">"T'es pas mon patron, alors tu la fermes."</p>
+        <p class="narrative-text">Le sourire narquois de <span class="character-dialogue">Rider</span> s'élargit. Il se redresse légèrement, ses mains dans les poches de son manteau :</p>
+        <p class="character-dialogue">Rider :</p>
+        <p class="narrative-text">"Peut-être pas, mais le boss m’a chargé de vous assurer tout ce qu’il faut pour atteindre votre cible."</p>
+        <p class="narrative-text">Soupirant, <span class="character-dialogue">Loupious</span> croise les bras et demande d'une voix grave :</p>
+        <p class="character-dialogue">Loupious :</p>
+        <p class="narrative-text">"T’as notre équipement ?"</p>
+        <p class="narrative-text">En réponse, <span class="character-dialogue">Rider</span> claque des doigts. Un de ses hommes s’avance et dépose un sac de sport lourd devant <span class="character-dialogue">Loupious</span>. Sans un mot, <span class="character-dialogue">Felina</span> ouvre le sac et en extrait deux pistolets, les jaugeant du regard avant de les fourrer dans son ceinturon. <span class="mission-info">+5 en attaque pour Felina</span>.</p>
+        <p class="narrative-text">Loupious, à son tour, sort une arme de l’arsenal, la manipulant avec expertise avant de la glisser dans son holster. <span class="mission-info">+5 en attaque pour Loupious</span>.</p>
+        <p class="narrative-text">Rider, satisfait, se redresse et s'éloigne en direction de sa voiture, laissant ses mots flotter dans l’air nocturne :</p>
+        <p class="character-dialogue">Rider :</p>
+        <p class="narrative-text">"Maintenant, vous savez ce qu'il vous reste à faire."</p>
+        <p class="narrative-text">Sans attendre de réponse, il monte dans la voiture, et dans un bruit de moteur sourd, disparaît dans les ténèbres, laissant <span class="character-dialogue">Felina</span> et <span class="character-dialogue">Loupious</span> seuls, enveloppés par le silence. Ils regardent la voiture de <span class="character-dialogue">Rider</span> disparaître, puis se tournent vers la zone interdite devant eux, prêts à exécuter la mission.</p>
+    </div>
+</body>
+</html>
